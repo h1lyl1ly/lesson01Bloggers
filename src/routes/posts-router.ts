@@ -49,7 +49,7 @@ export const postsRouter = Router({})
 export const titleValidation = body('title').isString().trim().isLength({min: 3, max: 15})
 export const shortDescriptionValidation = body('shortDescription').isString().trim().isLength({min: 3, max: 15})
 export const contentValidation = body('content').isString().trim().isLength({min: 3, max: 15})
-export const bloggerIdValidation = body().isNumeric().isLength({min: 0, max: 40})
+//export const bloggerIdValidation = body().isNumeric().isLength({min: 0, max: 40})
 export const bloggerNameValidation = body('bloggerName').isString().trim().isLength({min: 3, max: 15})
 export const inputValidationMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req)
@@ -121,7 +121,7 @@ postsRouter.post('/',
 postsRouter.delete('/:id', (req: Request, res: Response) => {
     const postIndex = posts.findIndex((post) => post.id === +req.params.id)
     if (postIndex === -1) return res.status(404).send()
-    posts = posts.filter(blogger => blogger.id !== +req.params.id)
+    posts = posts.filter(post => post.id !== +req.params.id)
     res.status(204).send()
 })
 postsRouter.put('/:id',
@@ -140,6 +140,7 @@ postsRouter.put('/:id',
         post.shortDescription = req.body.shortDescription
         post.content = req.body.content
         post.bloggerName = req.body.bloggerName
+        post.bloggerId = req.body.bloggerId
         return res.status(200).send(post)
     })
 // if (post && typeof req.body.name === "string" && req.body.name.length > 0 && req.body.name.length <= 40) {

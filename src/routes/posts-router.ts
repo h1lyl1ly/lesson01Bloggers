@@ -78,18 +78,18 @@ postsRouter.get('/:id', (req: Request, res: Response) => {
         else return false;
     })
     if (post !== undefined) {
-        res.status(204).send(post)
+        res.status(200).send(post)
     } else {
         res.status(404).send()
     }
 })
 postsRouter.post('/',
-    inputValidationMiddleware,
     titleValidation,
     shortDescriptionValidation,
     contentValidation,
     bloggerIdValidation,
     bloggerNameValidation,
+    inputValidationMiddleware,
     (req: Request, res: Response) => {
         const newPost = {
             id: +(new Date()),
@@ -109,12 +109,12 @@ postsRouter.delete('/:id', (req: Request, res: Response) => {
     res.status(204).send()
 })
 postsRouter.put('/:id',
-    inputValidationMiddleware,
     titleValidation,
     shortDescriptionValidation,
     contentValidation,
     bloggerIdValidation,
     bloggerNameValidation,
+    inputValidationMiddleware,
     (req: Request, res: Response) => {
         const id = +req.params.id
         // const bloggerId = +req.params.bloggerId
@@ -125,7 +125,7 @@ postsRouter.put('/:id',
         post.content = req.body.content
         post.bloggerName = req.body.bloggerName
         post.bloggerId = req.body.bloggerId
-        return res.status(200).send(post)
+        return res.status(204).send(post)
     })
 
 //   get запрос по конкретной айди как сделать ошибку 400 ?

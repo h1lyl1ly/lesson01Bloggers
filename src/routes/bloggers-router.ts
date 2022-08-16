@@ -3,11 +3,11 @@ import {body, validationResult} from 'express-validator'
 
 
 let bloggers = [
-    {id: 1, name: 'About JS - 01', youtubeUrl: 'https://www.youtube.com'},
-    {id: 2, name: 'About JS - 02', youtubeUrl: 'https://www.youtube.com'},
-    {id: 3, name: 'About JS - 03', youtubeUrl: 'https://www.youtube.com'},
-    {id: 4, name: 'About JS - 04', youtubeUrl: 'https://www.youtube.com'},
-    {id: 5, name: 'About JS - 05', youtubeUrl: 'https://www.youtube.com'}
+    {id: 1, name: 'About JS - 01', youtubeUrl: 'youtube.com'},
+    {id: 2, name: 'About JS - 02', youtubeUrl: 'youtube.com'},
+    {id: 3, name: 'About JS - 03', youtubeUrl: 'youtube.com'},
+    {id: 4, name: 'About JS - 04', youtubeUrl: 'youtube.com'},
+    {id: 5, name: 'About JS - 05', youtubeUrl: 'youtube.com'}
 ]
 
 export const nameValidationMiddleware = body("name").isString().trim().isLength({min: 0, max: 15})
@@ -15,14 +15,13 @@ export const youtubeUrlMiddleware = body("youtubeUrl").isString().trim().isLengt
 export const inputValidationMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-        const resultErrors = errors.array({onlyFirstError: true}).map((error) => {
+        const errorMessages = errors.array().map((error) => {
             return {
                 message: error.msg,
                 field: error.param
             }
         })
-        res.status(400).send(resultErrors)
-
+        res.status(400).send({errorMessages})
     } else {
         next()
     }
@@ -47,9 +46,9 @@ bloggersRouter.get('/:id', (req: Request, res: Response) => {
     }
 })
 bloggersRouter.post('/',
-    inputValidationMiddleware,
     nameValidationMiddleware,
     youtubeUrlMiddleware,
+    inputValidationMiddleware,
     (req: Request, res: Response) => {
         const newBlogger = {
             id: +(new Date()),
@@ -66,9 +65,9 @@ bloggersRouter.delete('/:id', (req: Request, res: Response) => {
     res.status(204).send()
 })
 bloggersRouter.put('/:id',
-    inputValidationMiddleware,
     nameValidationMiddleware,
     youtubeUrlMiddleware,
+    inputValidationMiddleware,
     (req: Request, res: Response) => {
         const id = +req.params.id
         const blogger = bloggers.find(blogger => blogger.id === id)

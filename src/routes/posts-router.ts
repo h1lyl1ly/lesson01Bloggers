@@ -84,12 +84,12 @@ postsRouter.get('/:id', (req: Request, res: Response) => {
     }
 })
 postsRouter.post('/',
+    inputValidationMiddleware,
     titleValidation,
     shortDescriptionValidation,
     contentValidation,
     bloggerIdValidation,
     bloggerNameValidation,
-    inputValidationMiddleware,
     (req: Request, res: Response) => {
         const newPost = {
             id: +(new Date()),
@@ -109,12 +109,12 @@ postsRouter.delete('/:id', (req: Request, res: Response) => {
     res.status(204).send()
 })
 postsRouter.put('/:id',
+    inputValidationMiddleware,
     titleValidation,
     shortDescriptionValidation,
     contentValidation,
     bloggerIdValidation,
     bloggerNameValidation,
-    inputValidationMiddleware,
     (req: Request, res: Response) => {
         const id = +req.params.id
         // const bloggerId = +req.params.bloggerId

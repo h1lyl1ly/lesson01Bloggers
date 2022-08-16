@@ -78,7 +78,7 @@ postsRouter.get('/:id', (req: Request, res: Response) => {
         else return false;
     })
     if (post !== undefined) {
-        res.status(200).send(post)
+        res.status(204).send(post)
     } else {
         res.status(404).send()
     }

@@ -10,8 +10,8 @@ let bloggers = [
     {id: 5, name: 'About JS - 05', youtubeUrl: 'it-incubator.eu'}
 ]
 
-export const nameValidationMiddleware = body("name").isString().trim().isLength({min: 3, max: 15})
-export const youtubeUrlMiddleware = body("youtubeUrl").trim().isLength({max: 100}).matches(/^https:\/\/([a-zA-Z0-9_-]+\.)+[a-zA-Z0-9_-]+(\/[a-zA-Z0-9_-]+)*\/?$/)
+export const nameValidationMiddleware = body("name").isString().trim().isLength({min: 0, max: 15})
+export const youtubeUrlMiddleware = body("youtubeUrl").isString().trim().isLength({max: 100}).matches(/^https:\/\/([a-zA-Z0-9_-]+\.)+[a-zA-Z0-9_-]+(\/[a-zA-Z0-9_-]+)*\/?$/)
 export const inputValidationMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -77,25 +77,6 @@ bloggersRouter.put('/:id',
         blogger.youtubeUrl = req.body.youtubeUrl
         return res.status(204).send(blogger)
     })
-// const errors = []
-// const isNameString  = typeof req.body.name === "string"
-// const isUrlString  = typeof req.body.youtubeUrl === "string"
-// const IsLengthValid = req.body.name.length > 0 && req.body.name.length <= 40
-//
-// if (blogger && isNameString && isUrlString && IsLengthValid) {
-//    blogger.name = req.body.name
-//    blogger.youtubeUrl = req.body.youtubeUrl
-//     res.status(204).send()
-// } else {
-//     res.status(400).send({
-//         "errorsMessages": [
-//             {
-//                 "message": "Title is required",
-//                 "field": "name"
-//             }
-//         ],
-//         "resultCode": 1
-//     })
-// }
+
 
 

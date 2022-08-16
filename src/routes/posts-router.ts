@@ -54,14 +54,13 @@ export const bloggerNameValidation = body('bloggerName').isString().trim().isLen
 export const inputValidationMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-        const resultErrors = errors.array({onlyFirstError: true}).map((error) => {
+        const errorMessages = errors.array().map((error) => {
             return {
                 message: error.msg,
                 field: error.param
             }
         })
-        res.status(400).send(resultErrors)
-
+        res.status(400).send({errorMessages})
     } else {
         next()
     }

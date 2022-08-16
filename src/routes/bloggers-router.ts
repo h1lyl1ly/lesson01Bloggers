@@ -46,8 +46,8 @@ bloggersRouter.get('/:id', (req: Request, res: Response) => {
     }
 })
 bloggersRouter.post('/',
-    nameValidationMiddleware,
     youtubeUrlMiddleware,
+    nameValidationMiddleware,
     inputValidationMiddleware,
     (req: Request, res: Response) => {
         const newBlogger = {
@@ -65,8 +65,8 @@ bloggersRouter.delete('/:id', (req: Request, res: Response) => {
     res.status(204).send()
 })
 bloggersRouter.put('/:id',
-    nameValidationMiddleware,
     youtubeUrlMiddleware,
+    nameValidationMiddleware,
     inputValidationMiddleware,
     (req: Request, res: Response) => {
         const id = +req.params.id

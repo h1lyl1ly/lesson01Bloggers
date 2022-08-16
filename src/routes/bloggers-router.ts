@@ -1,5 +1,6 @@
-import {Request, Response, Router} from "express";
-import {body} from "express-validator";
+import {NextFunction, Request, Response, Router} from 'express'
+import {body, validationResult} from 'express-validator'
+
 
 let bloggers = [
     {id: 1, name: 'About JS - 01', youtubeUrl: 'it-incubator.eu'},
@@ -9,12 +10,28 @@ let bloggers = [
     {id: 5, name: 'About JS - 05', youtubeUrl: 'it-incubator.eu'}
 ]
 
+export const nameValidationMiddleware = body("name").isString().trim().isLength({min: 3, max: 15})
+export const youtubeUrlMiddleware = body("youtubeUrl").trim().isLength({max: 100}).matches(/^https:\/\/([a-zA-Z0-9_-]+\.)+[a-zA-Z0-9_-]+(\/[a-zA-Z0-9_-]+)*\/?$/)
+export const inputValidationMiddleware = (req: Request, res: Response, next: NextFunction) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        const resultErrors = errors.array({onlyFirstError: true}).map((error) => {
+            return {
+                message: error.msg,
+                field: error.param
+            }
+        })
+        res.status(400).send(resultErrors)
+
+    } else {
+        next()
+    }
+}
 
 export const bloggersRouter = Router({})
 
 
-
-bloggersRouter.get('/', (req: Request, res: Response ) => {
+bloggersRouter.get('/', (req: Request, res: Response) => {
     res.status(200).send(bloggers)
 })
 bloggersRouter.get('/:id', (req: Request, res: Response) => {
@@ -29,57 +46,56 @@ bloggersRouter.get('/:id', (req: Request, res: Response) => {
         res.status(404).send()
     }
 })
-bloggersRouter.post('/', (req: Request, res: Response) => {
-    const newBlogger = {
-        id: +(new Date()),
-        name: req.body.name,
-        youtubeUrl: req.body.youtubeUrl
-    }
-
-    if (typeof req.body.name === "string" && req.body.name.length > 0 && req.body.name.length <= 15 && req.body.youtubeUrl === "string") {
-        res.status(201).send(newBlogger)
+bloggersRouter.post('/',
+    nameValidationMiddleware,
+    youtubeUrlMiddleware,
+    inputValidationMiddleware,
+    (req: Request, res: Response) => {
+        const newBlogger = {
+            id: +(new Date()),
+            name: req.body.name,
+            youtubeUrl: req.body.youtubeUrl
+        }
         bloggers.push(newBlogger)
-    } else {
-        res.status(400).send({
-            "errorsMessages": [
-                {
-                    "message": "Title is required",
-                    "field": "name"
-                }
-            ],
-            "resultCode": 1
-        })
-    }
-})
-bloggersRouter.delete('/:id',(req: Request, res: Response)=> {
+        res.status(201).send(newBlogger)
+    })
+bloggersRouter.delete('/:id', (req: Request, res: Response) => {
     const bloggerIndex = bloggers.findIndex((blogger) => blogger.id === +req.params.id)
-    if(bloggerIndex === -1) return res.status(404).send()
+    if (bloggerIndex === -1) return res.status(404).send()
     bloggers = bloggers.filter(blogger => blogger.id !== +req.params.id)
-    console.log(bloggerIndex)
     res.status(204).send()
 })
-bloggersRouter.put('/:id',(req: Request, res: Response)=>{
-    const id = +req.params.id
-    const blogger = bloggers.find((blogger) => {
-        if (blogger.id === id) return true;
-        else return false;
-    })
-    if (!blogger) {
-        res.status(404).send()
-    }
-    if (blogger && typeof req.body.name === "string" && req.body.name.length > 0 && req.body.name.length <= 40 && req.body.youtubeUrl === "string" ) {
+bloggersRouter.put('/:id',
+    nameValidationMiddleware,
+    youtubeUrlMiddleware,
+    inputValidationMiddleware,
+    (req: Request, res: Response) => {
+        const id = +req.params.id
+        const blogger = bloggers.find(blogger => blogger.id === id)
+        if (!blogger) return res.status(404).send()
         blogger.name = req.body.name
         blogger.youtubeUrl = req.body.youtubeUrl
-        res.status(204).send()
-    } else {
-        res.status(400).send({
-            "errorsMessages": [
-                {
-                    "message": "Title is required",
-                    "field": "name"
-                }
-            ],
-            "resultCode": 1
-        })
-    }
-})
+        return res.status(200).send(blogger)
+    })
+// const errors = []
+// const isNameString  = typeof req.body.name === "string"
+// const isUrlString  = typeof req.body.youtubeUrl === "string"
+// const IsLengthValid = req.body.name.length > 0 && req.body.name.length <= 40
+//
+// if (blogger && isNameString && isUrlString && IsLengthValid) {
+//    blogger.name = req.body.name
+//    blogger.youtubeUrl = req.body.youtubeUrl
+//     res.status(204).send()
+// } else {
+//     res.status(400).send({
+//         "errorsMessages": [
+//             {
+//                 "message": "Title is required",
+//                 "field": "name"
+//             }
+//         ],
+//         "resultCode": 1
+//     })
+// }
+
+

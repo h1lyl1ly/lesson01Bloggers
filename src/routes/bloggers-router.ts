@@ -75,7 +75,7 @@ bloggersRouter.put('/:id',
         if (!blogger) return res.status(404).send()
         blogger.name = req.body.name
         blogger.youtubeUrl = req.body.youtubeUrl
-        return res.status(200).send(blogger)
+        return res.status(204).send(blogger)
     })
 // const errors = []
 // const isNameString  = typeof req.body.name === "string"

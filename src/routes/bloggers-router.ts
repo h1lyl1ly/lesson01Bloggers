@@ -10,12 +10,13 @@ export let bloggers = [
     {id: 5, name: 'About JS - 05', youtubeUrl: 'https://trello.com/'}
 ]
 
-export const nameValidationMiddleware = body("name").isString().trim().isLength({max: 15})
+export const nameValidationMiddleware = body("name").isString().trim().notEmpty().isLength({max: 15})
 export const youtubeUrlMiddleware = body("youtubeUrl").isString().trim().isLength({max: 100}).matches(/^https:\/\/([a-zA-Z0-9_-]+\.)+[a-zA-Z0-9_-]+(\/[a-zA-Z0-9_-]+)*\/?$/)
 export const inputValidationMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req)
+
     if (!errors.isEmpty()) {
-        const resultErrors = errors.array({onlyFirstError: true}).map((error) => {
+        const resultErrors = errors.array().map((error) => {
             return {
                 message: error.msg,
                 field: error.param

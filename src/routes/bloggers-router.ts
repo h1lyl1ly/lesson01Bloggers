@@ -2,7 +2,7 @@ import {NextFunction, Request, Response, Router} from 'express'
 import {body, validationResult} from 'express-validator'
 
 
-let bloggers = [
+export let bloggers = [
     {id: 1, name: 'About JS - 01', youtubeUrl: 'https://trello.com/'},
     {id: 2, name: 'About JS - 02', youtubeUrl: 'https://trello.com/'},
     {id: 3, name: 'About JS - 03', youtubeUrl: 'https://trello.com/'},

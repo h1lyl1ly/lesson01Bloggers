@@ -1,5 +1,7 @@
 import {Request, Response, Router, NextFunction} from 'express'
 import {body, validationResult} from 'express-validator'
+import {bloggers} from "./bloggers-router";
+
 
 let posts = [
     {
@@ -50,8 +52,8 @@ export const titleValidation = body('title').isString().trim().notEmpty().isLeng
 export const shortDescriptionValidation = body('shortDescription').isString().trim().notEmpty().isLength({min:3, max: 100})
 export const contentValidation = body('content').isString().trim().notEmpty().isLength({min:1, max: 1000})
 export const bloggerIdValidation = body('bloggerId').isNumeric().notEmpty()
-export const idValidation = body('id').isNumeric().notEmpty()
-export const bloggerNameValidation = body('bloggerName').isString().trim().notEmpty()
+//export const idValidation = body('id').isNumeric().notEmpty()
+//export const bloggerNameValidation = body('bloggerName').isString().trim().notEmpty()
 export const inputValidationMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -84,21 +86,24 @@ postsRouter.get('/:id', (req: Request, res: Response) => {
     }
 })
 postsRouter.post('/',
-    idValidation,
+    //idValidation,
     titleValidation,
     shortDescriptionValidation,
     contentValidation,
     bloggerIdValidation,
-    bloggerNameValidation,
+    //bloggerNameValidation,
     inputValidationMiddleware,
     (req: Request, res: Response) => {
+        let bloggersId = req.body.bloggerId
+        const blogger = bloggers.find(blogger => blogger.id === bloggersId)
+        if (!blogger) return res.status(404).send()
         const newPost = {
             id: +(new Date()),
             title: req.body.title,
             shortDescription: req.body.shortDescription,
             content: req.body.content,
-            bloggerId: +req.body.bloggerId,
-            bloggerName: req.body.bloggerName
+            bloggerId: req.body.bloggerId,
+            bloggerName: blogger.name
         }
         posts.push(newPost)
         res.status(201).send(newPost)
@@ -110,7 +115,7 @@ postsRouter.delete('/:id', (req: Request, res: Response) => {
     res.status(204).send()
 })
 postsRouter.put('/:id',
-    idValidation,
+    //idValidation,
     titleValidation,
     shortDescriptionValidation,
     contentValidation,

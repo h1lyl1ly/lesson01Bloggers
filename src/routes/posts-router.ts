@@ -96,7 +96,7 @@ postsRouter.post('/',
     (req: Request, res: Response) => {
         let bloggersId = req.body.bloggerId
         const blogger = bloggers.find(blogger => blogger.id === bloggersId)
-        if (!blogger) return res.status(404).send()
+        if (!blogger) return res.status(400).send([{ message: 'Invalid bloggerId', field: "bloggerId" }])
         const newPost = {
             id: +(new Date()),
             title: req.body.title,

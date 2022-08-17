@@ -7,7 +7,7 @@ let posts = [
         title: 'About JS - 01',
         shortDescription: 'it-incubator.eu',
         content: 'privet',
-        bloggerId: 9,
+        bloggerId: 1,
         bloggerName: 'Timur'
     },
     {
@@ -15,7 +15,7 @@ let posts = [
         title: 'About JS - 01',
         shortDescription: 'it-incubator.eu',
         content: 'privet',
-        bloggerId: 10,
+        bloggerId: 2,
         bloggerName: 'Timur'
     },
     {
@@ -23,7 +23,7 @@ let posts = [
         title: 'About JS - 01',
         shortDescription: 'it-incubator.eu',
         content: 'privet',
-        bloggerId: 11,
+        bloggerId: 3,
         bloggerName: 'Timur'
     },
     {
@@ -31,7 +31,7 @@ let posts = [
         title: 'About JS - 01',
         shortDescription: 'it-incubator.eu',
         content: 'privet',
-        bloggerId: 12,
+        bloggerId: 4,
         bloggerName: 'Timur'
     },
     {
@@ -39,7 +39,7 @@ let posts = [
         title: 'About JS - 01',
         shortDescription: 'it-incubator.eu',
         content: 'privet',
-        bloggerId: 13,
+        bloggerId: 5,
         bloggerName: 'Timur'
     },
 ]
@@ -49,7 +49,7 @@ export const postsRouter = Router({})
 export const titleValidation = body('title').isString().trim().notEmpty().isLength({min:1, max: 30})
 export const shortDescriptionValidation = body('shortDescription').isString().trim().notEmpty().isLength({min:3, max: 100})
 export const contentValidation = body('content').isString().trim().notEmpty().isLength({min:1, max: 1000})
-export const bloggerIdValidation = body().isNumeric().notEmpty()
+export const bloggerIdValidation = body('bloggerId').isNumeric().notEmpty()
 export const bloggerNameValidation = body('bloggerName').isString().trim().notEmpty().isLength({min:1, max: 15})
 export const inputValidationMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req)

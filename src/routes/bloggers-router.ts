@@ -3,11 +3,11 @@ import {body, validationResult} from 'express-validator'
 
 
 let bloggers = [
-    {id: 1, name: 'About JS - 01', youtubeUrl: 'youtube.com'},
-    {id: 2, name: 'About JS - 02', youtubeUrl: 'youtube.com'},
-    {id: 3, name: 'About JS - 03', youtubeUrl: 'youtube.com'},
-    {id: 4, name: 'About JS - 04', youtubeUrl: 'youtube.com'},
-    {id: 5, name: 'About JS - 05', youtubeUrl: 'youtube.com'}
+    {id: 1, name: 'About JS - 01', youtubeUrl: 'https://trello.com/'},
+    {id: 2, name: 'About JS - 02', youtubeUrl: 'https://trello.com/'},
+    {id: 3, name: 'About JS - 03', youtubeUrl: 'https://trello.com/'},
+    {id: 4, name: 'About JS - 04', youtubeUrl: 'https://trello.com/'},
+    {id: 5, name: 'About JS - 05', youtubeUrl: 'https://trello.com/'}
 ]
 
 export const nameValidationMiddleware = body("name").isString().trim().isLength({max: 15})

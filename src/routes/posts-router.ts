@@ -7,7 +7,7 @@ let posts = [
         title: 'About JS - 01',
         shortDescription: 'it-incubator.eu',
         content: 'privet',
-        bloggerId: 1,
+        bloggerId: 2,
         bloggerName: 'Timur'
     },
     {
@@ -15,7 +15,7 @@ let posts = [
         title: 'About JS - 01',
         shortDescription: 'it-incubator.eu',
         content: 'privet',
-        bloggerId: 2,
+        bloggerId: 3,
         bloggerName: 'Timur'
     },
     {
@@ -23,7 +23,7 @@ let posts = [
         title: 'About JS - 01',
         shortDescription: 'it-incubator.eu',
         content: 'privet',
-        bloggerId: 3,
+        bloggerId: 4,
         bloggerName: 'Timur'
     },
     {
@@ -31,7 +31,7 @@ let posts = [
         title: 'About JS - 01',
         shortDescription: 'it-incubator.eu',
         content: 'privet',
-        bloggerId: 4,
+        bloggerId: 5,
         bloggerName: 'Timur'
     },
     {
@@ -39,7 +39,7 @@ let posts = [
         title: 'About JS - 01',
         shortDescription: 'it-incubator.eu',
         content: 'privet',
-        bloggerId: 5,
+        bloggerId: 6,
         bloggerName: 'Timur'
     },
 ]
@@ -50,7 +50,7 @@ export const titleValidation = body('title').isString().trim().notEmpty().isLeng
 export const shortDescriptionValidation = body('shortDescription').isString().trim().notEmpty().isLength({min:3, max: 100})
 export const contentValidation = body('content').isString().trim().notEmpty().isLength({min:1, max: 1000})
 export const bloggerIdValidation = body('bloggerId').isNumeric().notEmpty()
-export const bloggerNameValidation = body('bloggerName').isString().trim().notEmpty().isLength({min:1, max: 15})
+//export const bloggerNameValidation = body('bloggerName').isString().trim().notEmpty()
 export const inputValidationMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -87,15 +87,15 @@ postsRouter.post('/',
     shortDescriptionValidation,
     contentValidation,
     bloggerIdValidation,
-    bloggerNameValidation,
+    //bloggerNameValidation,
     inputValidationMiddleware,
     (req: Request, res: Response) => {
         const newPost = {
-            id: +(new Date()),
+            id: req.body.id,
             title: req.body.title,
             shortDescription: req.body.shortDescription,
             content: req.body.content,
-            bloggerId: +(new Date()),
+            bloggerId: req.body.bloggerId,
             bloggerName: req.body.bloggerName
         }
         posts.push(newPost)
@@ -112,7 +112,7 @@ postsRouter.put('/:id',
     shortDescriptionValidation,
     contentValidation,
     bloggerIdValidation,
-    bloggerNameValidation,
+    //bloggerNameValidation,
     inputValidationMiddleware,
     (req: Request, res: Response) => {
         const id = +req.params.id
@@ -130,5 +130,6 @@ postsRouter.put('/:id',
 //   get запрос по конкретной айди как сделать ошибку 400 ?
 //   post, почему-то генериться одинаковый id и bloggerid - они веедь ддолжны быть разные?
 //   put, не получается обновить данные
+//   как сделать newpost для конкреетного блогера?
 
 

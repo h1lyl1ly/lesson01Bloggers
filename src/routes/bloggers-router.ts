@@ -16,7 +16,7 @@ export const inputValidationMiddleware = (req: Request, res: Response, next: Nex
     const errors = validationResult(req)
 
     if (!errors.isEmpty()) {
-        const resultErrors = errors.array().map((error) => {
+        const resultErrors = errors.array({ onlyFirstError: true}).map((error) => {
             return {
                 message: error.msg,
                 field: error.param

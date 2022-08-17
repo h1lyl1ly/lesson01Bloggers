@@ -10,18 +10,19 @@ let bloggers = [
     {id: 5, name: 'About JS - 05', youtubeUrl: 'youtube.com'}
 ]
 
-export const nameValidationMiddleware = body("name").isString().trim().isLength({min: 0, max: 15})
+export const nameValidationMiddleware = body("name").isString().trim().isLength({max: 15})
 export const youtubeUrlMiddleware = body("youtubeUrl").isString().trim().isLength({max: 100}).matches(/^https:\/\/([a-zA-Z0-9_-]+\.)+[a-zA-Z0-9_-]+(\/[a-zA-Z0-9_-]+)*\/?$/)
 export const inputValidationMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-        const errorMessages = errors.array().map((error) => {
+        const resultErrors = errors.array({onlyFirstError: true}).map((error) => {
             return {
                 message: error.msg,
                 field: error.param
             }
         })
-        res.status(400).send({errorMessages})
+        res.status(400).send({errorsMessages: resultErrors})
+
     } else {
         next()
     }
@@ -46,8 +47,8 @@ bloggersRouter.get('/:id', (req: Request, res: Response) => {
     }
 })
 bloggersRouter.post('/',
-    youtubeUrlMiddleware,
     nameValidationMiddleware,
+    youtubeUrlMiddleware,
     inputValidationMiddleware,
     (req: Request, res: Response) => {
         const newBlogger = {
@@ -65,8 +66,8 @@ bloggersRouter.delete('/:id', (req: Request, res: Response) => {
     res.status(204).send()
 })
 bloggersRouter.put('/:id',
-    youtubeUrlMiddleware,
     nameValidationMiddleware,
+    youtubeUrlMiddleware,
     inputValidationMiddleware,
     (req: Request, res: Response) => {
         const id = +req.params.id

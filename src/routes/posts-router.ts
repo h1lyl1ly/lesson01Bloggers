@@ -46,26 +46,26 @@ let posts = [
 
 export const postsRouter = Router({})
 
-export const titleValidation = body('title').isString().trim().isLength({max: 30})
-export const shortDescriptionValidation = body('shortDescription').isString().trim().isLength({max: 100})
-export const contentValidation = body('content').isString().trim().isLength({max: 1000})
-export const bloggerIdValidation = body().isNumeric()
-export const bloggerNameValidation = body('bloggerName').isString().trim().isLength({min: 3, max: 15})
+export const titleValidation = body('title').isString().trim().notEmpty().isLength({min:1, max: 30})
+export const shortDescriptionValidation = body('shortDescription').isString().trim().notEmpty().isLength({min:3, max: 100})
+export const contentValidation = body('content').isString().trim().notEmpty().isLength({min:1, max: 1000})
+export const bloggerIdValidation = body().isNumeric().notEmpty()
+export const bloggerNameValidation = body('bloggerName').isString().trim().notEmpty().isLength({min:1, max: 15})
 export const inputValidationMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-        const errorMessages = errors.array().map((error) => {
+        const resultErrors = errors.array({onlyFirstError: true}).map((error) => {
             return {
                 message: error.msg,
                 field: error.param
             }
         })
-        res.status(400).send({errorMessages})
+        res.status(400).send({errorsMessages: resultErrors})
+
     } else {
         next()
     }
 }
-
 
 postsRouter.get('/', (req: Request, res: Response) => {
     res.status(200).send(posts)

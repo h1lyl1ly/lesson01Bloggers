@@ -132,7 +132,6 @@ postsRouter.put('/:id',
         post.title = req.body.title
         post.shortDescription = req.body.shortDescription
         post.content = req.body.content
-        post.bloggerName = req.body.bloggerName
         post.bloggerId = bloggersId
         return res.status(204).send(post)
     })

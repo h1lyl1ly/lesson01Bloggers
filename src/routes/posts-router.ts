@@ -124,13 +124,16 @@ postsRouter.put('/:id',
     inputValidationMiddleware,
     (req: Request, res: Response) => {
         const id = +req.params.id
+        let bloggersId = req.body.bloggerId
+        const blogger = bloggers.find(blogger => blogger.id === bloggersId)
+        if (!blogger) return res.status(400).send({errorsMessages: [{ message: 'Invalid bloggerId', field: "bloggerId" }] })
         const post = posts.find(post => post.id === id)
         if (!post) return res.status(404).send()
         post.title = req.body.title
         post.shortDescription = req.body.shortDescription
         post.content = req.body.content
         post.bloggerName = req.body.bloggerName
-        post.bloggerId = req.body.bloggerId
+        post.bloggerId = bloggersId
         return res.status(204).send(post)
     })
 

@@ -50,7 +50,7 @@ export const titleValidation = body('title').isString().trim().notEmpty().isLeng
 export const shortDescriptionValidation = body('shortDescription').isString().trim().notEmpty().isLength({min:3, max: 100})
 export const contentValidation = body('content').isString().trim().notEmpty().isLength({min:1, max: 1000})
 export const bloggerIdValidation = body('bloggerId').isNumeric().notEmpty()
-export const idValidation = body('id').isNumeric().notEmpty()
+//export const idValidation = body('id').isNumeric().notEmpty()
 //export const bloggerNameValidation = body('bloggerName').isString().trim().notEmpty()
 export const inputValidationMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req)
@@ -84,7 +84,7 @@ postsRouter.get('/:id', (req: Request, res: Response) => {
     }
 })
 postsRouter.post('/',
-    idValidation,
+    //idValidation,
     titleValidation,
     shortDescriptionValidation,
     contentValidation,
@@ -93,11 +93,11 @@ postsRouter.post('/',
     inputValidationMiddleware,
     (req: Request, res: Response) => {
         const newPost = {
-            id: req.body.id,
+            id: +req.body.id,
             title: req.body.title,
             shortDescription: req.body.shortDescription,
             content: req.body.content,
-            bloggerId: req.body.bloggerId,
+            bloggerId: +req.body.bloggerId,
             bloggerName: req.body.bloggerName
         }
         posts.push(newPost)
@@ -110,7 +110,7 @@ postsRouter.delete('/:id', (req: Request, res: Response) => {
     res.status(204).send()
 })
 postsRouter.put('/:id',
-    idValidation,
+    //idValidation,
     titleValidation,
     shortDescriptionValidation,
     contentValidation,
@@ -126,7 +126,7 @@ postsRouter.put('/:id',
         post.shortDescription = req.body.shortDescription
         post.content = req.body.content
         post.bloggerName = req.body.bloggerName
-        post.bloggerId = req.body.bloggerId
+        post.bloggerId = +req.body.bloggerId
         return res.status(204).send(post)
     })
 

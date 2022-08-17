@@ -52,8 +52,8 @@ export const titleValidation = body('title').isString().trim().notEmpty().isLeng
 export const shortDescriptionValidation = body('shortDescription').isString().trim().notEmpty().isLength({min:3, max: 100})
 export const contentValidation = body('content').isString().trim().notEmpty().isLength({min:1, max: 1000})
 export const bloggerIdValidation = body('bloggerId').isNumeric().notEmpty()
-//export const idValidation = body('id').isNumeric().notEmpty()
-//export const bloggerNameValidation = body('bloggerName').isString().trim().notEmpty()
+export const idValidation = body('id').isNumeric().notEmpty()
+export const bloggerNameValidation = body('bloggerName').isString().trim().notEmpty()
 export const inputValidationMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -86,12 +86,12 @@ postsRouter.get('/:id', (req: Request, res: Response) => {
     }
 })
 postsRouter.post('/',
-    //idValidation,
+    idValidation,
     titleValidation,
     shortDescriptionValidation,
     contentValidation,
     bloggerIdValidation,
-    //bloggerNameValidation,
+    bloggerNameValidation,
     inputValidationMiddleware,
     (req: Request, res: Response) => {
         let bloggersId = req.body.bloggerId
@@ -115,23 +115,22 @@ postsRouter.delete('/:id', (req: Request, res: Response) => {
     res.status(204).send()
 })
 postsRouter.put('/:id',
-    //idValidation,
+    idValidation,
     titleValidation,
     shortDescriptionValidation,
     contentValidation,
     bloggerIdValidation,
-   // bloggerNameValidation,
+    bloggerNameValidation,
     inputValidationMiddleware,
     (req: Request, res: Response) => {
         const id = +req.params.id
-        // const bloggerId = +req.params.bloggerId
         const post = posts.find(post => post.id === id)
         if (!post) return res.status(404).send()
         post.title = req.body.title
         post.shortDescription = req.body.shortDescription
         post.content = req.body.content
         post.bloggerName = req.body.bloggerName
-        post.bloggerId = +req.body.bloggerId
+        post.bloggerId = req.body.bloggerId
         return res.status(204).send(post)
     })
 

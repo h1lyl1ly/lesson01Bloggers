@@ -1,6 +1,7 @@
 import {Request, Response, Router, NextFunction} from 'express'
 import {body, validationResult} from 'express-validator'
 import {bloggers} from "./bloggers-router";
+import {authMiddleware} from "../middlewares/auth-middleware";
 
 
 let posts = [
@@ -86,6 +87,7 @@ postsRouter.get('/:id', (req: Request, res: Response) => {
     }
 })
 postsRouter.post('/',
+    authMiddleware,
     //idValidation,
     titleValidation,
     shortDescriptionValidation,
@@ -108,13 +110,16 @@ postsRouter.post('/',
         posts.push(newPost)
         res.status(201).send(newPost)
     })
-postsRouter.delete('/:id', (req: Request, res: Response) => {
+postsRouter.delete('/:id',
+    authMiddleware,
+    (req: Request, res: Response) => {
     const postIndex = posts.findIndex((post) => post.id === +req.params.id)
     if (postIndex === -1) return res.status(404).send()
     posts = posts.filter(post => post.id !== +req.params.id)
     res.status(204).send()
 })
 postsRouter.put('/:id',
+    authMiddleware,
     //idValidation,
     titleValidation,
     shortDescriptionValidation,

@@ -1,8 +1,10 @@
-import express, {Request, Response} from 'express'
+import express, {NextFunction, Request, Response} from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import {bloggersRouter} from "./routes/bloggers-router"
 import {postsRouter} from "./routes/posts-router"
+
+
 
 const app = express()
 const port = process.env.PORT || 3001

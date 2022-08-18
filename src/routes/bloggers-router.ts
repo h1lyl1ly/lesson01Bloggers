@@ -1,5 +1,6 @@
 import {NextFunction, Request, Response, Router} from 'express'
 import {body, validationResult} from 'express-validator'
+import {authMiddleware} from "../middlewares/auth-middleware";
 
 
 export let bloggers = [
@@ -48,6 +49,7 @@ bloggersRouter.get('/:id', (req: Request, res: Response) => {
     }
 })
 bloggersRouter.post('/',
+    authMiddleware,
     nameValidationMiddleware,
     youtubeUrlMiddleware,
     inputValidationMiddleware,
@@ -60,13 +62,16 @@ bloggersRouter.post('/',
         bloggers.push(newBlogger)
         res.status(201).send(newBlogger)
     })
-bloggersRouter.delete('/:id', (req: Request, res: Response) => {
+bloggersRouter.delete('/:id',
+    authMiddleware,
+    (req: Request, res: Response) => {
     const bloggerIndex = bloggers.findIndex((blogger) => blogger.id === +req.params.id)
     if (bloggerIndex === -1) return res.status(404).send()
     bloggers = bloggers.filter(blogger => blogger.id !== +req.params.id)
     res.status(204).send()
 })
 bloggersRouter.put('/:id',
+    authMiddleware,
     nameValidationMiddleware,
     youtubeUrlMiddleware,
     inputValidationMiddleware,

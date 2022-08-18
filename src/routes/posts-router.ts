@@ -71,10 +71,14 @@ export const inputValidationMiddleware = (req: Request, res: Response, next: Nex
     }
 }
 
-postsRouter.get('/', (req: Request, res: Response) => {
+postsRouter.get('/',
+    authMiddleware,
+    (req: Request, res: Response) => {
     res.status(200).send(posts)
 })
-postsRouter.get('/:id', (req: Request, res: Response) => {
+postsRouter.get('/:id',
+    authMiddleware,
+    (req: Request, res: Response) => {
     const id = +req.params.id
     const post = posts.find((post) => {
         if (post.id === id) return true;

@@ -33,10 +33,14 @@ export const inputValidationMiddleware = (req: Request, res: Response, next: Nex
 export const bloggersRouter = Router({})
 
 
-bloggersRouter.get('/', (req: Request, res: Response) => {
+bloggersRouter.get('/',
+    authMiddleware,
+    (req: Request, res: Response) => {
     res.status(200).send(bloggers)
 })
-bloggersRouter.get('/:id', (req: Request, res: Response) => {
+bloggersRouter.get('/:id',
+    authMiddleware,
+    (req: Request, res: Response) => {
     const id = +req.params.id
     const blogger = bloggers.find((blogger) => {
         if (blogger.id === id) return true;

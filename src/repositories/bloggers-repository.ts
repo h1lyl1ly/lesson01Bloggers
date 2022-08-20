@@ -39,10 +39,10 @@ export const bloggersRepository = {
         } else {
             return false
         }
-    },
-    deleteAllData() {
-        function empty() {
-            bloggers = [];
-        }   empty()
+    // },
+    // deleteAllData() {
+    //     function empty() {
+    //         bloggers = [];
+    //     }   empty()
     }
 }

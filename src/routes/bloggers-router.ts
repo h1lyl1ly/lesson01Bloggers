@@ -6,8 +6,6 @@ import {youtubeUrlMiddleware} from "../middlewares/youtubeUrl-middleware";
 import {inputValidationMiddleware} from "../middlewares/input-validation-middleware";
 
 
-
-
 export const bloggersRouter = Router({})
 
 bloggersRouter.get('/', (req: Request, res: Response) => {
@@ -61,6 +59,9 @@ bloggersRouter.put('/:id',
         // blogger.youtubeUrl = req.body.youtubeUrl
         // return res.status(204).send(blogger)
     })
-
+bloggersRouter.delete('/', (req: Request, res: Response) => {
+    const delBloggers = bloggersRepository.deleteAllData()
+    res.status(204).send(delBloggers)
+})
 
 

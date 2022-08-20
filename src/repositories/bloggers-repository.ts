@@ -12,8 +12,8 @@ export const bloggersRepository = {
         return bloggers
     },
     getBloggerById(id: number) {
-        let bloggerById = bloggers.find(blogger => blogger.id === id)
-        return bloggerById
+        const blogger = bloggers.find(blogger => blogger.id === id)
+        return blogger
     },
     createBlogger(name: string, youtubeUrl: string) {
         const newBlogger = {
@@ -39,10 +39,10 @@ export const bloggersRepository = {
         } else {
             return false
         }
-    // },
-    // deleteAllData() {
-    //     function empty() {
-    //         bloggers = [];
-    //     }   empty()
+    },
+    deleteAllData() {
+        function empty() {
+            bloggers = [];
+        }   empty()
     }
 }

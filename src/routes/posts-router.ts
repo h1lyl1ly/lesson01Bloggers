@@ -39,7 +39,7 @@ postsRouter.post('/',
     inputValidationMiddleware,
     (req: Request, res: Response) => {
         // if (!post) return res.status(400).send({errorsMessages: [{ message: 'Invalid bloggerId', field: "bloggerId" }] })
-        const newPost = postsRepository.createPost(req.body.title, req.body.shortDescription, req.body.content, +req.body.bloggerId)
+        const newPost = postsRepository.createPost(req.body.title, req.body.shortDescription, req.body.content, +req.params.bloggerId)
         if (!newPost) return res.status(400).send({
             "errorsMessages": [
                 {

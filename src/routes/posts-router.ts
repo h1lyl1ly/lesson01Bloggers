@@ -22,7 +22,7 @@ postsRouter.get('/', (req: Request, res: Response) => {
 })
 postsRouter.get('/:id', (req: Request, res: Response) => {
     const foundPost = postsRepository.getPostsById(+req.params.id)
-    if (!foundPost) {
+    if (foundPost) {
         res.status(200).send(foundPost)
     } else {
         res.status(404).send()
@@ -40,8 +40,15 @@ postsRouter.post('/',
     (req: Request, res: Response) => {
         // if (!post) return res.status(400).send({errorsMessages: [{ message: 'Invalid bloggerId', field: "bloggerId" }] })
         const newPost = postsRepository.createPost(req.body.title, req.body.shortDescription, req.body.content, req.body.bloggerId)
-        if (!newPost) return res.status(400).send()
-        res.status(201).send(newPost)
+        if (!newPost) return res.status(400).send({
+            "errorsMessages": [
+                {
+                    "message": "Invalid value",
+                    "field": "bloggerId"
+                }
+            ]
+        })
+       res.status(201).send(newPost)
     })
 postsRouter.delete('/:id',
     authMiddleware,

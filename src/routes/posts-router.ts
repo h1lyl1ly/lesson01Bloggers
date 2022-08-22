@@ -44,7 +44,7 @@ postsRouter.post('/',
         if (!newPost) return res.status(400).send({
             "errorsMessages": [
                 {
-                    "message": "Invalid value",
+                    "message": "Invalid value2",
                     "field": "bloggerId"
                 }
             ]

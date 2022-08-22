@@ -5,7 +5,7 @@ import {titleValidation} from "../middlewares/title-middleware";
 import {shortDescriptionValidation} from "../middlewares/shortDescription";
 import {contentValidation} from "../middlewares/content";
 import {bloggerIdValidation} from "../middlewares/bloggerId";
-import {posts, postsRepository} from "../repositories/posts-repository";
+import {postsRepository} from "../repositories/posts-repository";
 import {body} from "express-validator";
 
 
@@ -75,7 +75,7 @@ postsRouter.put('/:id',
             const post = postsRepository.getPostsById(+req.params.id)
             res.status(204).send(post)
         } else {
-            res.status(404).send
+            res.status(404).send()
         }
         // // const id = +req.params.id
         // // let bloggersId = req.body.bloggerId

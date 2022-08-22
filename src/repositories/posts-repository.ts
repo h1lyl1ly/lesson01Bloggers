@@ -52,12 +52,10 @@ export const postsRepository = {
         return post
     },
     createPost(title: string, shortDescription: string, content: string, bloggerId: number) {
-        console.log(bloggers)
-        console.log(bloggerId)
         const bloggerName = bloggers.find(bloggers => bloggers.id === bloggerId)
         if (!bloggerName) return false
-        const post = posts.find(post => post.bloggerId === bloggerId)
-        if (!post) return false
+        // const post = posts.find(post => post.bloggerId === bloggerId)
+        // if (!post) return false
         const newPost = {
             id: +(new Date()),
             title: title,

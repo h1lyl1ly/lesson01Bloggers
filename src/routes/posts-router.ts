@@ -40,15 +40,8 @@ postsRouter.post('/',
     (req: Request, res: Response) => {
         // if (!post) return res.status(400).send({errorsMessages: [{ message: 'Invalid bloggerId', field: "bloggerId" }] })
         const newPost = postsRepository.createPost(req.body.title, req.body.shortDescription, req.body.content, req.body.bloggerId)
-        if (!newPost) return res.status(400).send({
-            "errorsMessages": [
-                {
-                    "message": "Invalid value",
-                    "field": "bloggerId"
-                }
-            ]
-        })
-        return res.status(201).send(newPost)
+        if (!newPost) return res.status(400).send()
+        res.status(201).send(newPost)
     })
 postsRouter.delete('/:id',
     authMiddleware,

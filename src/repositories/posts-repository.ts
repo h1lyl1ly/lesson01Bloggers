@@ -7,7 +7,7 @@ export let posts = [
         shortDescription: 'it-incubator.eu',
         content: 'privet',
         bloggerId: 2,
-        bloggerName: 'Timur'
+        c: 'Timur'
     },
     {
         id: 2,

@@ -6,6 +6,11 @@ import {shortDescriptionValidation} from "../middlewares/shortDescription";
 import {contentValidation} from "../middlewares/content";
 import {bloggerIdValidation} from "../middlewares/bloggerId";
 import {postsRepository} from "../repositories/posts-repository";
+import {body} from "express-validator";
+
+
+export const bloggerNameValidation = body('bloggerName').isString().trim().notEmpty()
+
 
 export const postsRouter = Router({})
 
@@ -30,7 +35,7 @@ postsRouter.post('/',
     shortDescriptionValidation,
     contentValidation,
     bloggerIdValidation,
-    //bloggerNameValidation,
+    bloggerNameValidation,
     inputValidationMiddleware,
     (req: Request, res: Response) => {
         // if (!post) return res.status(400).send({errorsMessages: [{ message: 'Invalid bloggerId', field: "bloggerId" }] })
@@ -72,7 +77,6 @@ postsRouter.put('/:id',
         // if (!post) return res.status(404).send()
         // return res.status(204).send(post)
     })
-
 postsRouter.delete('/', (req: Request, res: Response) => {
     postsRepository.deleteAllData()
     res.status(204).send()

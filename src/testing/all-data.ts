@@ -8,10 +8,10 @@ export const postsRouter = Router({})
 
 
 bloggersRouter.delete('/', (req: Request, res: Response) => {
-    const delBloggers = bloggersRepository.deleteAllData()
-    res.status(204).send(delBloggers)
+    bloggersRepository.deleteAllData()
+    res.status(204).send()
 })
 postsRouter.delete('/', (req: Request, res: Response) => {
-    const delPosts = postsRepository.deleteAllData()
-    res.status(204).send(delPosts)
+    postsRepository.deleteAllData()
+    res.status(204).send()
 })

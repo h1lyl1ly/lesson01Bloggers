@@ -1,3 +1,6 @@
 import {body} from "express-validator";
 
-export const shortDescriptionValidation = body('shortDescription').isString().trim().notEmpty().isLength({min:3, max: 100})
+export const shortDescriptionValidation = body('shortDescription').isString().trim().isLength({min: 0, max: 100})
+
+
+

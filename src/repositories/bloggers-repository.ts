@@ -41,17 +41,5 @@ export const bloggersRepository = {
         } else {
             return false
         }
-    },
-    deleteAllData() {
-
-            // bloggers = [];
-            // posts = []
-            return
     }
-    // deleteAllData() {
-    //     function empty() {
-    //         bloggers = [];
-    //         posts = []
-    //     }   empty()
-    // }
 }

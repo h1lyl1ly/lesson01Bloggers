@@ -73,10 +73,10 @@ postsRouter.put('/:id',
         // return res.status(204).send(post)
     })
 
-postsRouter.delete('/', (req: Request, res: Response) => {
-    const delPosts = postsRepository.deleteAllData()
-    res.status(204).send(delPosts)
-})
+// postsRouter.delete('/', (req: Request, res: Response) => {
+//     const delPosts = postsRepository.deleteAllData()
+//     res.status(204).send(delPosts)
+// })
 
 
 

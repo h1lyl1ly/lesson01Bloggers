@@ -5,11 +5,11 @@ import {titleValidation} from "../middlewares/title-middleware";
 import {shortDescriptionValidation} from "../middlewares/shortDescription";
 import {contentValidation} from "../middlewares/content";
 import {bloggerIdValidation} from "../middlewares/bloggerId";
-import {postsRepository} from "../repositories/posts-repository";
+import {posts, postsRepository} from "../repositories/posts-repository";
 import {body} from "express-validator";
 
 
-export const bloggerNameValidation = body('bloggerName').isString().trim().notEmpty()
+// export const bloggerNameValidation = body('bloggerName').isString().trim().notEmpty()
 
 
 export const postsRouter = Router({})
@@ -35,11 +35,19 @@ postsRouter.post('/',
     shortDescriptionValidation,
     contentValidation,
     bloggerIdValidation,
-    bloggerNameValidation,
+    // bloggerNameValidation,
     inputValidationMiddleware,
     (req: Request, res: Response) => {
         // if (!post) return res.status(400).send({errorsMessages: [{ message: 'Invalid bloggerId', field: "bloggerId" }] })
-        const newPost = postsRepository.createPost(req.body.title, req.body.shortDescription, req.body.content, req.body.bloggerId, req.body.bloggerName)
+        const newPost = postsRepository.createPost(req.body.title, req.body.shortDescription, req.body.content, req.body.bloggerId)
+        if (!newPost) return res.status(400).send({
+            "errorsMessages": [
+                {
+                    "message": "Invalid value",
+                    "field": "bloggerId"
+                }
+            ]
+        })
         res.status(201).send(newPost)
     })
 postsRouter.delete('/:id',

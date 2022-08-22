@@ -1,3 +1,4 @@
+import {bloggers} from "./bloggers-repository";
 
 export let posts = [
     {
@@ -50,14 +51,18 @@ export const postsRepository = {
         const post = posts.find(post => post.id === id)
         return post
     },
-    createPost(title: string, shortDescription: string, content: string, bloggerId: number, bloggerName: string) {
+    createPost(title: string, shortDescription: string, content: string, bloggerId: number) {
+        const bloggerName = bloggers.find(bloggers => bloggers.id === bloggerId)
+        if (!bloggerName) return false
+        const post = posts.find(post => post.bloggerId === bloggerId)
+        if (!post) return false
         const newPost = {
             id: +(new Date()),
             title: title,
             shortDescription: shortDescription,
             content: content,
             bloggerId: bloggerId,
-            bloggerName: bloggerName
+            bloggerName: bloggerName.name
         }
         posts.push(newPost)
         return newPost

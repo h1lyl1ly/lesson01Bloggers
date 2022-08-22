@@ -13,6 +13,7 @@ import {body} from "express-validator";
 
 
 export const postsRouter = Router({})
+export const testingRouter = Router({})
 
 
 

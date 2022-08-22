@@ -6,6 +6,7 @@ import {youtubeUrlMiddleware} from "../middlewares/youtubeUrl-middleware";
 import {inputValidationMiddleware} from "../middlewares/input-validation-middleware";
 
 
+export const testingRouter = Router({})
 export const bloggersRouter = Router({})
 
 bloggersRouter.get('/', (req: Request, res: Response) => {

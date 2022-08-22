@@ -1,4 +1,3 @@
-import {bloggers} from "./bloggers-repository";
 
 export let posts = [
     {
@@ -7,7 +6,7 @@ export let posts = [
         shortDescription: 'it-incubator.eu',
         content: 'privet',
         bloggerId: 2,
-        c: 'Timur'
+        bloggerName: 'Timur'
     },
     {
         id: 2,

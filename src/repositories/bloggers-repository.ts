@@ -1,3 +1,5 @@
+import {posts} from "./posts-repository";
+
 
 export let bloggers = [
     {id: 1, name: 'About JS - 01', youtubeUrl: 'https://trello.com/'},
@@ -41,8 +43,15 @@ export const bloggersRepository = {
         }
     },
     deleteAllData() {
-        function empty() {
-            bloggers = [];
-        }   empty()
+
+            // bloggers = [];
+            // posts = []
+            return
     }
+    // deleteAllData() {
+    //     function empty() {
+    //         bloggers = [];
+    //         posts = []
+    //     }   empty()
+    // }
 }

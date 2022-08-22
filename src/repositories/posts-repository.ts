@@ -85,10 +85,10 @@ export const postsRepository = {
             return false
         }
     },
-    deleteAllData() {
-        function empty() {
-            posts = [];
-        }   empty()
-    }
+    // deleteAllData() {
+    //     function empty() {
+    //         posts = [];
+    //     }   empty()
+    // }
 }
 

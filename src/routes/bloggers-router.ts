@@ -60,9 +60,6 @@ bloggersRouter.put('/:id',
         // blogger.youtubeUrl = req.body.youtubeUrl
         // return res.status(204).send(blogger)
     })
-bloggersRouter.delete('/', (req: Request, res: Response) => {
-    bloggersRepository.deleteAllData()
-    res.status(204).send()
-})
+
 
 

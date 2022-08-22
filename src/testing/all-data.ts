@@ -11,7 +11,7 @@ testingRouter.delete('/all-data', (req: Request, res: Response) => {
     bloggersRepository.deleteAllData()
     res.status(204).send()
 })
-// postsRouter.delete('/', (req: Request, res: Response) => {
+// testingRouter.delete('/all-data', (req: Request, res: Response) => {
 //     postsRepository.deleteAllData()
 //     res.status(204).send()
 // })

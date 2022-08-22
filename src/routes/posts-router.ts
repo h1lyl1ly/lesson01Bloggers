@@ -86,10 +86,7 @@ postsRouter.put('/:id',
         // if (!post) return res.status(404).send()
         // return res.status(204).send(post)
     })
-postsRouter.delete('/', (req: Request, res: Response) => {
-    postsRepository.deleteAllData()
-    res.status(204).send()
-})
+
 
 
 

@@ -73,7 +73,7 @@ postsRouter.put('/:id',
     //bloggerNameValidation,
     inputValidationMiddleware,
     (req: Request, res: Response) => {
-        const isUpdated = postsRepository.updatePost(+req.params.id,req.body.title, req.body.shortDescription, req.body.content, +req.body.bloggerId)
+        const isUpdated = postsRepository.updatePost(+req.params.id,req.body.title, req.body.shortDescription, req.body.content, req.body.bloggerId)
         if (isUpdated) {
             const post = postsRepository.getPostsById(+req.params.id)
             res.status(204).send(post)

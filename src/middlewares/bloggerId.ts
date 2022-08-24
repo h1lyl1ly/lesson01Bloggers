@@ -1,5 +1,5 @@
-import {body,CustomValidator } from "express-validator";
-import {postsRepository} from "../repositories/posts-repository";
+import {body} from "express-validator";
+import {bloggersRepository} from "../repositories/bloggers-repository";
 
 
 
@@ -7,7 +7,7 @@ export const bloggerIdValidation = body('bloggerId')
     .isNumeric()
     .custom(async (bloggerId) => {
         const existingBloggerId =
-            await postsRepository.getPostsById(bloggerId)
+                await bloggersRepository.getBloggerById(bloggerId)
         if (existingBloggerId)  {
             throw  new Error ('BloggerId already exists')
         }

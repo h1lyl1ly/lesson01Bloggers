@@ -52,8 +52,8 @@ export const postsRepository = {
         return post
     },
     createPost(title: string, shortDescription: string, content: string, bloggerId: number) {
-        const bloggerName = bloggers.find(bloggers => bloggers.id === bloggerId)
-        if (!bloggerName) return false
+        const blogger = bloggers.find(bloggers => bloggers.id === bloggerId)
+        if (!blogger) return false
         // const post = posts.find(post => post.bloggerId === bloggerId)
         // if (!post) return false
         const newPost = {
@@ -62,7 +62,7 @@ export const postsRepository = {
             shortDescription: shortDescription,
             content: content,
             bloggerId: bloggerId,
-            bloggerName: bloggerName.name
+            bloggerName: blogger.name
         }
         posts.push(newPost)
         return newPost

@@ -7,9 +7,11 @@ import {contentValidation} from "../middlewares/content";
 import {bloggerIdValidation} from "../middlewares/bloggerId";
 import {postsRepository} from "../repositories/posts-repository";
 import {body} from "express-validator";
+import {CustomValidation} from "express-validator/src/context-items";
 
 
-// export const bloggerNameValidation = body('bloggerName').isString().trim().notEmpty()
+
+
 
 
 export const postsRouter = Router({})

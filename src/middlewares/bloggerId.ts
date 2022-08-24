@@ -1,18 +1,20 @@
 import {body} from "express-validator";
 import {bloggersRepository} from "../repositories/bloggers-repository";
 
-
-
 export const bloggerIdValidation = body('bloggerId')
     .isNumeric()
-    .custom(async (bloggerId) => {
-        const existingBloggerId =
-                await bloggersRepository.getBloggerById(bloggerId)
-        if (existingBloggerId)  {
-            throw  new Error ('BloggerId already exists')
-        }
-    })
     .withMessage('body.bloggerId must be Int')
+
+// export const bloggerIdValidation = body('bloggerId')
+//     .isNumeric()
+//     .custom(async (bloggerId) => {
+//         const existingBloggerId =
+//                 await bloggersRepository.getBloggerById(bloggerId)
+//         if (existingBloggerId)  {
+//             throw  new Error ('BloggerId already exists')
+//         }
+//     })
+//     .withMessage('body.bloggerId must be Int')
 
 
 // const bloggerIdBodyRegExp2 = /^\d+$/i

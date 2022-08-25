@@ -39,18 +39,8 @@ postsRouter.post('/',
     bloggerIdValidation,
     inputValidationMiddleware,
     (req: Request, res: Response) => {
-        // if (!post) return res.status(400).send({errorsMessages: [{ message: 'Invalid bloggerId', field: "bloggerId" }] })
         const newPost = postsRepository.createPost(req.body.title, req.body.shortDescription, req.body.content, req.body.bloggerId)
         if (!newPost) return res.status(400).send({errorsMessages: [{ message: 'Invalid bloggerId', field: "bloggerId" }] })
-        // if (!newPost) return res.status(400).send({errorsMessages: [{ message: 'Invalid bloggerId', field: "bloggerId" }] })
-        // if (!newPost) return res.status(400).send({
-        //     "errorsMessages": [
-        //         {
-        //             "message": 'Invalid bloggerId',
-        //             "field": "bloggerId"
-        //         }
-        //     ]
-        // })
        res.status(201).send(newPost)
     })
 postsRouter.delete('/:id',
@@ -65,12 +55,10 @@ postsRouter.delete('/:id',
 })
 postsRouter.put('/:id',
     authMiddleware,
-    //idValidation,
     titleValidation,
     shortDescriptionValidation,
     contentValidation,
     bloggerIdValidation,
-    //bloggerNameValidation,
     inputValidationMiddleware,
     (req: Request, res: Response) => {
         const isUpdated = postsRepository.updatePost(+req.params.id,req.body.title, req.body.shortDescription, req.body.content, req.body.bloggerId)
@@ -80,23 +68,9 @@ postsRouter.put('/:id',
         } else {
             res.status(404).send()
         }
-        // // const id = +req.params.id
-        // // let bloggersId = req.body.bloggerId
-        // const blogger = bloggers.find(blogger => blogger.id === bloggersId)
-        // if (!blogger) return res.status(400).send({errorsMessages: [{ message: 'Invalid bloggerId', field: "bloggerId" }] })
-        // const post = posts.find(post => post.id === id)
-        // if (!post) return res.status(404).send()
-        // return res.status(204).send(post)
     })
 
 
 
 
-//   get запрос по конкретной айди как сделать ошибку 400 ?
-//   post, почему-то генериться одинаковый id и bloggerid - они веедь ддолжны быть разные?
-//   put, не получается обновить данные
-//   как сделать newpost для конкреетного блогера?
 
-
-//export const idValidation = body('id').isNumeric().notEmpty()
-//export const bloggerNameValidation = body('bloggerName').isString().trim().notEmpty()

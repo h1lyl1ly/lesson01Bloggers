@@ -11,10 +11,10 @@ export const bloggersRouter = Router({})
 
 bloggersRouter.get('/', async (req: Request, res: Response) => {
     const foundBloggers: BloggerType[] = await bloggersRepository.allBloggers()
-        res.status(200).send(foundBloggers)
+    res.status(200).send(foundBloggers)
 })
-bloggersRouter.get('/:id', (req: Request, res: Response) => {
-    const foundBlogger = bloggersRepository.getBloggerById(+req.params.id)
+bloggersRouter.get('/:id',   (req: Request, res: Response) => {
+    const foundBlogger =  bloggersRepository.getBloggerById(+req.params.id)
     if (foundBlogger) {
         res.status(200).send(foundBlogger)
     } else {

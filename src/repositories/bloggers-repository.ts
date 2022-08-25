@@ -19,11 +19,9 @@ export const bloggersRepository = {
     async allBloggers(): Promise<BloggerType[]> {
         return bloggers
     },
-    async getBloggerById(id: number): Promise<boolean> {
+    async getBloggerById(id: number) {
         const blogger = bloggers.find(blogger => blogger.id === id)
-        return true
-        if (!blogger) return false
-
+        return blogger
     },
     async createBlogger(name: string, youtubeUrl: string): Promise<BloggerType> {
         const newBlogger = {

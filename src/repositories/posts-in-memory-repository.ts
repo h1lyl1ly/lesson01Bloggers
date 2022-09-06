@@ -1,6 +1,16 @@
-import {bloggers} from "./bloggers-repository";
+import {bloggers} from "./bloggers-in-memory-repository";
 
-export let posts = [
+export type PostsType = {
+    id: number
+    title: string
+    shortDescription: string
+    content: string
+    bloggerId: number
+    bloggerName: string
+}
+
+
+export let posts: PostsType[] = [
     {
         id: 1,
         title: 'About JS - 01',
@@ -44,36 +54,39 @@ export let posts = [
 ]
 
 export const postsRepository = {
-    allPosts() {
+    async allPosts(): Promise<PostsType[]> {
         return posts
     },
-    getPostsById(id: number) {
+    async getPostsById(id: number): Promise<PostsType | null> {
         const post = posts.find(post => post.id === id)
-        return post
+        if (post) {
+            return post
+        } else {
+            return null
+        }
     },
-    createPost(title: string, shortDescription: string, content: string, bloggerId: number) {
+    async createPost(title: string, shortDescription: string, content: string, bloggerId: number) {
         const blogger = bloggers.find(bloggers => bloggers.id === bloggerId)
         if (!blogger) return false
-        // const post = posts.find(post => post.bloggerId === bloggerId)
-        // if (!post) return false
         const newPost = {
             id: +(new Date()),
             title: title,
             shortDescription: shortDescription,
             content: content,
             bloggerId: bloggerId,
-            bloggerName: blogger.name
+            bloggerName: blogger.name,
+            createdAt: new Date()
         }
         posts.push(newPost)
         return newPost
     },
-    deletePost(id: number) {
+    async deletePost(id: number) {
         const postIndex = posts.findIndex((post) => post.id === id)
         if (postIndex === -1) return false
         posts = posts.filter(post => post.id !== id)
         return true
     },
-    updatePost(id: number, title: string, shortDescription: string, content: string, bloggerId: number) {
+    async updatePost(id: number, title: string, shortDescription: string, content: string, bloggerId: number) {
         const post = posts.find(post => post.id === id)
         if (post) {
             post.title = title

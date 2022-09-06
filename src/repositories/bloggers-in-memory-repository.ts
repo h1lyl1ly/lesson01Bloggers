@@ -1,5 +1,3 @@
-import {posts} from "./posts-repository";
-
 export type BloggerType = {
     id: number
     name: string
@@ -19,9 +17,13 @@ export const bloggersRepository = {
     async allBloggers(): Promise<BloggerType[]> {
         return bloggers
     },
-    async getBloggerById(id: number) {
+    async getBloggerById(id: number): Promise<BloggerType | null> {
         const blogger = bloggers.find(blogger => blogger.id === id)
-        return blogger
+        if (blogger) {
+            return blogger
+        } else {
+            return null
+        }
     },
     async createBlogger(name: string, youtubeUrl: string): Promise<BloggerType> {
         const newBlogger = {

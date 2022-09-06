@@ -1,9 +1,13 @@
-import express, {NextFunction, Request, Response} from 'express'
+import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import {bloggersRouter} from "./routes/bloggers-router"
 import {postsRouter} from "./routes/posts-router"
 import {testingRouter} from "./testing/all-data";
+import {runDb} from "./repositories/db";
+
+
+
 
 
 
@@ -20,6 +24,12 @@ app.use('/bloggers', bloggersRouter)
 app.use('/posts', postsRouter)
 app.use('/testing',testingRouter)
 
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-})
+const startApp = async () => {
+    await runDb()
+    app.listen(port, () => {
+        console.log(`Example app listening on port ${port}`)
+    })
+}
+
+startApp()
+

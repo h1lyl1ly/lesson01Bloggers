@@ -9,7 +9,7 @@ export type BloggerType = {
 }
 
 
-const mongoUri = "mongodb://tim:5u6249tqtjt@ac-ez5opmn-shard-00-00.upprzye.mongodb.net:27017,ac-ez5opmn-shard-00-01.upprzye.mongodb.net:27017,ac-ez5opmn-shard-00-02.upprzye.mongodb.net:27017/admin?ssl=true&replicaSet=atlas-sp8ntd-shard-0&readPreference=primary&connectTimeoutMS=10000&authSource=admin&authMechanism=SCRAM-SHA-1&3t.uriVersion=3&3t.connection.name=atlas-sp8ntd-shard-0&3t.databases=admin&3t.alwaysShowAuthDB=true&3t.alwaysShowDBFromUserRole=true&3t.sslTlsVersion=TLS"
+const mongoUri = "mongodb+srv://tim:5u6249tqtjt@learning.upprzye.mongodb.net/?retryWrites=true&w=majority"
 
 
 

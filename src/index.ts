@@ -5,21 +5,15 @@ import {bloggersRouter} from "./routes/bloggers-router"
 import {postsRouter} from "./routes/posts-router"
 import {testingRouter} from "./testing/all-data";
 import {runDb} from "./repositories/db";
-
-
-
-
-
-import dotenv from "dotenv"
-dotenv.config()
+import {config} from "dotenv"
+config()
 
 
 const app = express()
 const port = process.env.PORT || 3001
 
 
-// const parserMiddleware = bodyParser({})
-// app.use(parserMiddleware)
+
 
 app.use(cors())
 app.use(bodyParser.json())

@@ -12,17 +12,21 @@ export type BloggerType = {
 
 
 
-const client = new MongoClient(process.env.MONGOURI || "")
-console.log({client: process.env.MONGOURI})
+const client = new MongoClient(process.env.MONGOURI || "mongodb+srv://tim:WQDSkgjJJUF5TdOE@learning.upprzye.mongodb.net/Learning?retryWrites=true&w=majority")
+
 
 export const db = client.db("it-incubator")
 export const bloggersCollection = db.collection<BloggerType>("bloggers");
+
+// добавить сюда коллекцию ппостов
+// export const postsCollection =
+
 
 
 export async function runDb() {
     try {
         await client.connect();
-        await client.db().command({ ping: 1 });
+        await client.db("it-incubator").command({ ping: 1 });
         console.log("Connected successfully to server");
     } catch {
         console.log('Connected failed')

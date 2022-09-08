@@ -17,7 +17,7 @@ const port = process.env.PORT || 3001
 
 app.use(cors())
 app.use(bodyParser.json())
-app.use('/bloggers', bloggersRouter)
+app.use('/blogs', bloggersRouter)
 app.use('/posts', postsRouter)
 app.use('/testing',testingRouter)
 

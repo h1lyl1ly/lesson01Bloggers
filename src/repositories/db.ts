@@ -21,7 +21,7 @@ export async function runDb() {
         console.log("Connected successfully to server");
     } catch {
         console.log('Connected failed')
-        // await client.close();
+        await client.close();
     }
 }
 

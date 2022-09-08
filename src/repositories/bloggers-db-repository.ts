@@ -33,7 +33,7 @@ export const bloggersRepository = {
         return blogger
     },
     async createBlogger(newBlogger: BloggerType): Promise<BloggerType> {
-        const result = await bloggersCollection.insertOne(newBlogger)
+        await bloggersCollection.insertOne(newBlogger)
         return newBlogger
     },
     async deleteBlogger(id: number): Promise<boolean> {

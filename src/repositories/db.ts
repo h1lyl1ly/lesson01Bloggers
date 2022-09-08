@@ -1,6 +1,6 @@
 import {MongoClient} from "mongodb"
-import {config} from "dotenv"
-config()
+// import {config} from "dotenv"
+// config()
 
 const mongoUri = process.env.MONGOURI || "mongodb://localhost:27017/?maxPoolSize=20&w=majority" || "mongodb+srv://tima:srQknCjEun3iGtnD@cluster0.lzwzkeo.mongodb.net/Cluster0?retryWrites=true&w=majority"
 

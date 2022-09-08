@@ -23,8 +23,10 @@ export async function runDb() {
         await client.connect();
         await client.db("it-incubator").command({ ping: 1 });
         console.log("Connected successfully to server");
-    } catch {
-        console.log('Connected failed')
+    } catch(error) {
+        console.log("mongoUri = ", mongoUri);
+
+        console.log('Connected failed ', error)
         await client.close();
     }
 }

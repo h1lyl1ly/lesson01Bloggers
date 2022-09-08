@@ -5,8 +5,8 @@ import {bloggersRouter} from "./routes/bloggers-router"
 import {postsRouter} from "./routes/posts-router"
 import {testingRouter} from "./testing/all-data";
 import {runDb} from "./repositories/db";
-// import {config} from "dotenv"
-// config()
+import {config} from "dotenv"
+config()
 
 
 const app = express()

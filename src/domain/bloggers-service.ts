@@ -1,7 +1,6 @@
 import {bloggersRepository} from "../repositories/bloggers-db-repository"
 import {BloggerType} from "../repositories/db";
 
-// export const searchTerm = req.params.searchTerm
 
 export const bloggersService = {
     async allBloggers(): Promise<BloggerType[]> {

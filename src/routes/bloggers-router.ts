@@ -1,7 +1,7 @@
 import {Request, Response, Router} from 'express'
 import {authMiddleware} from "../middlewares/auth-middleware";
 import {bloggersService} from "../domain/bloggers-service";
-import {inputValidationMiddleware} from "../middlewares/input-validation-middleware";
+import {errorsValidationMiddleware} from "../middlewares/errors-validation-middleware";
 import {bloggersValidation} from "../middlewares/bloggers-midlewares";
 import {BloggerType} from "../repositories/db";
 
@@ -22,7 +22,7 @@ bloggersRouter.get('/:id', async (req: Request, res: Response) => {
 bloggersRouter.post('/',
     authMiddleware,
     bloggersValidation,
-    inputValidationMiddleware,
+    errorsValidationMiddleware,
     async (req: Request, res: Response) => {
         const newBlogger: BloggerType = await bloggersService.createBlogger(req.body.name, req.body.youtubeUrl)
         res.status(201).send(newBlogger)
@@ -40,7 +40,7 @@ bloggersRouter.delete('/:id',
 bloggersRouter.put('/:id',
     authMiddleware,
     bloggersValidation,
-    inputValidationMiddleware,
+    errorsValidationMiddleware,
     async (req: Request, res: Response) => {
         const isUpdated = await bloggersService.updateBlogger(+req.params.id, req.body.name, req.body.youtubeUrl)
         if (isUpdated) {

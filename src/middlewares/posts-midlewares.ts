@@ -1,5 +1,5 @@
 import {body} from "express-validator";
-import {bloggersRepository} from "../repositories/bloggers-in-memory-repository";
+import {bloggersRepository} from "../repositories/bloggers-db-repository";
 
 
 export const titleValidation = body('title').trim().isLength({min:1, max: 30}).withMessage('title validation some error')
@@ -14,6 +14,7 @@ export const bloggerIdValidation = body('bloggerId')
     .custom(async (bloggerId) => {
         const existingBloggerId =
             await bloggersRepository.getBloggerById(bloggerId)
+        console.log(existingBloggerId,'midle')
         if (!existingBloggerId)  {
             throw  new Error ('BloggerId in not exists')
         }

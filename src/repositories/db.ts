@@ -9,17 +9,25 @@ export type BloggerType = {
     createdAt: Date
 }
 
+export type PostsType = {
+    id: number
+    title: string
+    shortDescription: string
+    content: string
+    bloggerId: number
+    bloggerName: string
+    createdAt: Date
+}
 
 
+// const client = new MongoClient(process.env.MONGOURI || "")
 
-const client = new MongoClient(process.env.MONGOURI || "mongodb+srv://tim:WQDSkgjJJUF5TdOE@learning.upprzye.mongodb.net/Learning?retryWrites=true&w=majority")
+const client = new MongoClient ("mongodb://localhost:27017")
 
 
 export const db = client.db("it-incubator")
-export const bloggersCollection = db.collection<BloggerType>("bloggers");
-
-// добавить сюда коллекцию ппостов
-// export const postsCollection =
+export const bloggersCollection = db.collection<BloggerType>("bloggers")
+export const postsCollection = db.collection<PostsType>("posts")
 
 
 

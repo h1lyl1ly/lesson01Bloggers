@@ -11,6 +11,7 @@ import {bloggersCollection, BloggerType} from "./db";
 
 // ? - это тернарные выражения (загуглить), оператор
 
+// export const searchTerm = req.params.searchTerm
 
 
 
@@ -21,14 +22,6 @@ import {bloggersCollection, BloggerType} from "./db";
 
 // countDocuments ( передать filter, которая будет находить searchNameTerm
 
-// new Date() - timestamp in ISODate
-// "year-month-date hour:min:sec zone"
-//
-// new Date().getTime() - miliseconds
-
-// { $gte : new Date(dateString) }}
-
-// let dateString = new Date('2013-12-12T16:00:00.000Z')
 
 export const bloggersRepository = {
     async allBloggers(): Promise<BloggerType[]> {
@@ -50,6 +43,5 @@ export const bloggersRepository = {
     async updateBlogger(id: number, name: string, youtubeUrl: string): Promise<boolean> {
         const result = await bloggersCollection.updateOne({id: id},{$set: {name: name, youtubeUrl: youtubeUrl} })
         return result.matchedCount === 1
-
     }
 }

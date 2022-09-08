@@ -20,9 +20,9 @@ export type PostsType = {
 }
 
 
-// const client = new MongoClient(process.env.MONGOURI || "")
+const client = new MongoClient(process.env.MONGOURI || "mongodb://localhost:27017")
 
-const client = new MongoClient ("mongodb://localhost:27017")
+// const client = new MongoClient ("mongodb://localhost:27017")
 
 
 export const db = client.db("it-incubator")

@@ -1,8 +1,12 @@
 import {MongoClient} from "mongodb"
-// import {config} from "dotenv"
-// config()
+ import {config} from "dotenv"
+config()
 
-const mongoUri = process.env.MONGOURI || "mongodb://localhost:27017/?maxPoolSize=20&w=majority" || "mongodb+srv://tima:srQknCjEun3iGtnD@cluster0.lzwzkeo.mongodb.net/Cluster0?retryWrites=true&w=majority"
+const mongoUri = process.env.MONGOURI
+
+if (!mongoUri) {
+    throw new Error('mongo uri doesnt exist')
+}
 
 const client = new MongoClient(mongoUri)
 
@@ -11,7 +15,7 @@ const client = new MongoClient(mongoUri)
 
 
 export const db = client.db("it-incubator")
-export const bloggersCollection = db.collection<BloggerType>("bloggers")
+export const bloggersCollection = db.collection<BloggerType>("blogs")
 export const postsCollection = db.collection<PostsType>("posts")
 
 export async function runDb() {

@@ -1,5 +1,5 @@
 import {MongoClient} from "mongodb"
- import {config} from "dotenv"
+import {config} from "dotenv"
 config()
 
 const mongoUri = process.env.MONGOURI
@@ -24,9 +24,6 @@ export async function runDb() {
         await client.db("it-incubator").command({ ping: 1 });
         console.log("Connected successfully to server");
     } catch(error) {
-        console.log("mongoUri = ", mongoUri);
-
-        console.log('Connected failed ', error)
         await client.close();
     }
 }

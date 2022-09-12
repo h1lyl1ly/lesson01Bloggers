@@ -2,15 +2,15 @@ import {bloggersCollection, BloggerType} from "./db";
 
 
 // вздрочнуть темму Promise
-
+//.project({_id:0}
 
 export const bloggersRepository = {
     async allBloggers() {
-        const bloggers = await bloggersCollection.find().project({_id:0}).toArray()
+        const bloggers = await bloggersCollection.find({},{projection:{_id:0}}).toArray()
         return bloggers
     },
     async getBloggerById(id: string): Promise<BloggerType | null> {
-        const blogger: BloggerType | null =  await bloggersCollection.findOne({id},{projection:{_id:0}})
+        const blogger: BloggerType | null =  await bloggersCollection.findOne({id: id},{projection:{_id:0}})
         return blogger
     },
     async createBlogger(newBlogger: { createdAt: Date; youtubeUrl: string; name: string; id: string }): Promise<BloggerType> {

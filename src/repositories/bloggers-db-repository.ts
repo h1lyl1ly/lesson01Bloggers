@@ -5,8 +5,8 @@ import {bloggersCollection, BloggerType} from "./db";
 
 
 export const bloggersRepository = {
-    async allBloggers()  {
-        const bloggers = await bloggersCollection.find({}).project({_id:0}).toArray()
+    async allBloggers() {
+        const bloggers = await bloggersCollection.find().project({_id:0}).toArray()
         return bloggers
     },
     async getBloggerById(id: string): Promise<BloggerType | null> {

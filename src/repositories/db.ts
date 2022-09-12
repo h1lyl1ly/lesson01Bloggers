@@ -30,7 +30,6 @@ if (!mongoUri) {
 
 const client = new MongoClient(mongoUri)
 
-// const client = new MongoClient ("mongodb://localhost:27017")
 
 
 export const db = client.db("it-incubator")

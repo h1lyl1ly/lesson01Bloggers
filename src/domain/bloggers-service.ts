@@ -3,7 +3,7 @@ import {BloggerType} from "../repositories/db";
 
 
 export const bloggersService = {
-    async allBloggers(): Promise<BloggerType[]> {
+    async allBloggers() {
         return bloggersRepository.allBloggers()
     },
     async getBloggerById(id: string): Promise<BloggerType | null> {

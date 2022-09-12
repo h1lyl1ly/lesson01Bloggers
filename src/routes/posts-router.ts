@@ -14,7 +14,7 @@ postsRouter.get('/', async (req: Request, res: Response) => {
     res.status(200).send(foundPosts)
 })
 postsRouter.get('/:id', async (req: Request, res: Response) => {
-    const foundPost = await postsService.getPostsById(+req.params.id)
+    const foundPost = await postsService.getPostsById(req.params.id)
     if (foundPost) {
         res.status(200).send(foundPost)
     } else {
@@ -26,13 +26,13 @@ postsRouter.post('/',
     postsValidation,
     errorsValidationMiddleware,
     async (req: Request, res: Response) => {
-        const blogger = await bloggersService.getBloggerById(req.body.bloggerId)
+        const blogger = await bloggersService.getBloggerById(req.body.blogId)
         if(blogger){
-            const newPost: PostsType = await postsService.createPost(req.body.title, req.body.shortDescription, req.body.content,blogger)
+            const newPost: PostsType = await postsService.createPost(req.params.id, req.body.title, req.body.shortDescription, req.body.content, req.body.blogId, blogger)
             if (!newPost) return res.status(400).send({
                 errorsMessages: [{
-                    message: 'Invalid bloggerId',
-                    field: "bloggerId"
+                    message: 'Invalid blogId',
+                    field: "blogId"
                 }]
             })
             return res.status(201).send(newPost)
@@ -44,7 +44,7 @@ postsRouter.post('/',
 postsRouter.delete('/:id',
     authMiddleware,
     async (req: Request, res: Response) => {
-        const isDeleted = await postsService.deletePost(+req.params.id)
+        const isDeleted = await postsService.deletePost(req.params.id)
         if (isDeleted) {
             res.status(204).send()
         } else {
@@ -56,10 +56,10 @@ postsRouter.put('/:id',
     postsValidation,
     errorsValidationMiddleware,
     async (req: Request, res: Response) => {
-        const isUpdated = await postsService.updatePost(+req.params.id, req.body.title, req.body.shortDescription, req.body.content, req.body.bloggerId)
+        const isUpdated = await postsService.updatePost(req.params.id, req.body.title, req.body.shortDescription, req.body.content, req.body.blogId)
         console.log(isUpdated,'111')
         if (isUpdated) {
-            const post = await postsService.getPostsById(+req.params.id)
+            const post = await postsService.getPostsById(req.params.id)
             res.status(204).send(post)
         } else {
             res.status(404).send()

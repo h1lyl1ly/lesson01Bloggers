@@ -1,5 +1,15 @@
 import {body} from "express-validator";
 
+
+// export const idValidationMiddleware = body("id")
+//     .trim().isNumeric().withMessage("id must be int")
+//
+//      .isString().withMessage("id must be string")
+
+
+
+
+
 export const nameValidationMiddleware = body("name")
     .trim()
     .isLength({
@@ -18,6 +28,7 @@ export const youtubeUrlMiddleware = body("youtubeUrl").trim().matches(youtubeUrl
 
 
 export const bloggersValidation = [
+    // idValidationMiddleware,
     nameValidationMiddleware,
     youtubeUrlMiddleware,
 ]

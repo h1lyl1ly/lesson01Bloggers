@@ -2,7 +2,27 @@ import {MongoClient} from "mongodb"
 import {config} from "dotenv"
 config()
 
-const mongoUri = process.env.MONGOURI
+
+export type BloggerType = {
+    id: string
+    name: string
+    youtubeUrl: string
+    createdAt: Date
+}
+
+export type PostsType = {
+    id: string
+    title: string
+    shortDescription: string
+    content: string
+    blogId: string
+    blogName: string
+    createdAt: Date
+}
+
+
+
+const mongoUri = process.env.MONGOURI || "mongodb://localhost:27017"
 
 if (!mongoUri) {
     throw new Error('mongo uri doesnt exist')
@@ -28,21 +48,6 @@ export async function runDb() {
     }
 }
 
-export type BloggerType = {
-    id: number
-    name: string
-    youtubeUrl: string
-    createdAt: Date
-}
 
-export type PostsType = {
-    id: number
-    title: string
-    shortDescription: string
-    content: string
-    bloggerId: number
-    bloggerName: string
-    createdAt: Date
-}
 
 

@@ -12,7 +12,7 @@ bloggersRouter.get('/', async (req: Request, res: Response) => {
     res.status(200).send(foundBloggers)
 })
 bloggersRouter.get('/:id', async (req: Request, res: Response) => {
-    const foundBlogger = await bloggersService.getBloggerById(+req.params.id)
+    const foundBlogger = await bloggersService.getBloggerById(req.params.id)
     if (foundBlogger) {
         res.status(200).send(foundBlogger)
     } else {
@@ -30,7 +30,7 @@ bloggersRouter.post('/',
 bloggersRouter.delete('/:id',
     authMiddleware,
     async (req: Request, res: Response) => {
-        const isDeleted = await bloggersService.deleteBlogger(+req.params.id)
+        const isDeleted = await bloggersService.deleteBlogger(req.params.id)
         if (isDeleted) {
             res.status(204).send()
         } else {
@@ -42,9 +42,9 @@ bloggersRouter.put('/:id',
     bloggersValidation,
     errorsValidationMiddleware,
     async (req: Request, res: Response) => {
-        const isUpdated = await bloggersService.updateBlogger(+req.params.id, req.body.name, req.body.youtubeUrl)
+        const isUpdated = await bloggersService.updateBlogger(req.params.id, req.body.name, req.body.youtubeUrl)
         if (isUpdated) {
-            const blogger = await bloggersService.getBloggerById(+req.params.id)
+            const blogger = await bloggersService.getBloggerById(req.params.id)
             res.status(204).send(blogger)
         } else {
             res.status(404).send()

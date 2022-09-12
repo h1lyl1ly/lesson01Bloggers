@@ -7,27 +7,27 @@ export const postsService = {
     async allPosts(): Promise<PostsType[]> {
         return postsRepository.allPosts()
     },
-    async getPostsById(id: number): Promise<PostsType | null> {
+    async getPostsById(id: string): Promise<PostsType | null> {
         return postsRepository.getPostsById(id)
 
     },
-    async createPost(title: string, shortDescription: string, content: string, blogger: BloggerType): Promise<PostsType> {
+    async createPost(id: string, title: string, shortDescription: string, content: string, blogId: string, blogger: BloggerType): Promise<PostsType> {
         const newPost = {
-            id: +(new Date()),
+            id: (+(new Date())).toString(),
             title,
             shortDescription,
             content,
-            bloggerId: blogger.id,
-            bloggerName: blogger.name,
+            blogId: blogger.id,
+            blogName: blogger.name,
             createdAt: new Date()
         }
         const createdPost = await postsRepository.createPost(newPost)
         return createdPost
     },
-    async deletePost(id: number): Promise<boolean> {
+    async deletePost(id: string): Promise<boolean> {
         return await postsRepository.deletePost(id)
     },
-    async updatePost(id: number, title: string, shortDescription: string, content: string, bloggerId: number): Promise<boolean> {
-        return await postsRepository.updatePost(id, title, shortDescription, content, bloggerId)
+    async updatePost(id: string, title: string, shortDescription: string, content: string, blogId: string): Promise<boolean> {
+        return await postsRepository.updatePost(id, title, shortDescription, content, blogId)
     }
 }

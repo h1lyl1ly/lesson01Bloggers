@@ -8,13 +8,14 @@ import {runDb} from "./repositories/db";
 import {config} from "dotenv"
 config()
 
+const timeout = require('connect-timeout')
 
 const app = express()
 const port = process.env.PORT || 3001
 
 
 
-
+app.use(timeout('20s'))
 app.use(cors())
 app.use(bodyParser.json())
 app.use('/blogs', bloggersRouter)

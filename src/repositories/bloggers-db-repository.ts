@@ -3,7 +3,7 @@ import {bloggersCollection, BloggerType} from "./db";
 
 // вздрочнуть темму Promise
 // .project({_id:0}
-// { $unset: ["_id"] }
+
 
 export const bloggersRepository = {
     async allBloggers() {

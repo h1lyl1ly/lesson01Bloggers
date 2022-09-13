@@ -15,7 +15,7 @@ export const bloggersRepository = {
         return blogger
     },
     async createBlogger(newBlogger: { createdAt: Date; youtubeUrl: string; name: string; id: string }): Promise<BloggerType> {
-        await `bloggersCollection.insertOne({newBlogger}, {projection:{_id:false}} )`;
+        await bloggersCollection.insertOne(newBlogger);
         return newBlogger
     },
     async deleteBlogger(id: string): Promise<boolean> {

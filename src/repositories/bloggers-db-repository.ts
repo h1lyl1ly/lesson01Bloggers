@@ -11,12 +11,11 @@ export const bloggersRepository = {
         return bloggers
     },
     async getBloggerById(id: string): Promise<BloggerType | null> {
-        const blogger: BloggerType | null =  await bloggersCollection.findOne({id: id},{projection:{_id:false}})
+        const blogger: BloggerType | null =  await bloggersCollection.findOne({id: id},{projection:{_id:0}})
         return blogger
     },
-    async createBlogger(newBlogger: { createdAt: Date; youtubeUrl: string; name: string; id: string }): Promise<BloggerType> {
-        await bloggersCollection.insertOne(newBlogger);
-        return newBlogger
+    async createBlogger(newBlogger: { createdAt: Date; youtubeUrl: string; name: string; id: string }): Promise<BloggerType | any> {
+         await bloggersCollection.insertOne(newBlogger).then(res => res);
     },
     async deleteBlogger(id: string): Promise<boolean> {
         const result = await bloggersCollection.deleteOne({id: id})

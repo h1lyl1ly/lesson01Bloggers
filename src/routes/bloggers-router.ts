@@ -24,7 +24,7 @@ bloggersRouter.post('/',
     bloggersValidation,
     errorsValidationMiddleware,
     async (req: Request, res: Response) => {
-        const newBlogger: BloggerType = await bloggersService.createBlogger(req.body.name, req.body.youtubeUrl)
+        const newBlogger: BloggerType | null = await bloggersService.createBlogger(req.body.name, req.body.youtubeUrl)
         res.status(201).send(newBlogger)
 })
 bloggersRouter.delete('/:id',

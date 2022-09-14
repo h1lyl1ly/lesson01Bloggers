@@ -10,15 +10,16 @@ export const bloggersService = {
         return bloggersRepository.getBloggerById(id)
 
     },
-    async createBlogger(name: string, youtubeUrl: string): Promise<BloggerType> {
+    async createBlogger(name: string, youtubeUrl: string): Promise<BloggerType | null> {
         const newBlogger = {
             id: (+(new Date())).toString(),
             name,
             youtubeUrl,
             createdAt: new Date()
         }
-        const createdBlogger = await bloggersRepository.createBlogger(newBlogger)
-        return createdBlogger
+        await bloggersRepository.createBlogger(newBlogger)
+        return this.getBloggerById(newBlogger.id)
+
     },
     async deleteBlogger(id: string): Promise<boolean> {
         return await bloggersRepository.deleteBlogger(id)

@@ -20,7 +20,6 @@ export const idValidationMiddleware = body("id")
 
 
 export const blogIdValidation = body('blogId')
-    .isNumeric().withMessage('body.blogId must be Int')
     .isString().withMessage('body.blogId must be string')
     .custom(async (blogId) => {
         const existingblogId =

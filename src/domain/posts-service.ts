@@ -11,7 +11,7 @@ export const postsService = {
         return postsRepository.getPostsById(id)
 
     },
-    async createPost(id: string, title: string, shortDescription: string, content: string, blogId: string, blogger: BloggerType): Promise<PostsType> {
+    async createPost(id: string, title: string, shortDescription: string, content: string, blogId: string, blogger: BloggerType): Promise<PostsType | null> {
         const newPost = {
             id: (+(new Date())).toString(),
             title,
@@ -21,8 +21,8 @@ export const postsService = {
             blogName: blogger.name,
             createdAt: new Date()
         }
-        const createdPost = await postsRepository.createPost(newPost)
-        return createdPost
+        await postsRepository.createPost(newPost)
+        return this.getPostsById(newPost.id)
     },
     async deletePost(id: string): Promise<boolean> {
         return await postsRepository.deletePost(id)

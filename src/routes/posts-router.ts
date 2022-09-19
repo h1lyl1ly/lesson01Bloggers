@@ -28,7 +28,7 @@ postsRouter.post('/',
     async (req: Request, res: Response) => {
         const blogger = await bloggersService.getBloggerById(req.body.blogId)
         if(blogger){
-            const newPost: PostsType = await postsService.createPost(req.params.id, req.body.title, req.body.shortDescription, req.body.content, req.body.blogId, blogger)
+            const newPost: PostsType | null = await postsService.createPost(req.params.id, req.body.title, req.body.shortDescription, req.body.content, req.body.blogId, blogger)
             if (!newPost) return res.status(400).send({
                 errorsMessages: [{
                     message: 'Invalid blogId',

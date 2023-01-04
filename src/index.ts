@@ -10,7 +10,7 @@ config()
 
 // const timeout = require('connect-timeout')
 
-const app = express()
+export const app = express()
 const port = process.env.PORT || 3001
 
 

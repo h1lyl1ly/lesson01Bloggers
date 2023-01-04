@@ -1,13 +1,56 @@
 import {bloggersCollection, BloggerType} from "./db";
 
 
-// вздрочнуть темму Promise
-// .project({_id:0}
+
+// type sortedBy = {
+//     direction: 'asc' | 'desc'
+// }
+
+
+
+const queryParams = (queryBloggersParams: any) => {
+    let searchNameTerm = typeof queryBloggersParams.searchNameTerm === "string" ? queryBloggersParams.searchNameTerm : ""
+    let pageSize = typeof queryBloggersParams.pageSize === 'string' ? +queryBloggersParams.pageSize : 10
+    let pageNumber =typeof queryBloggersParams.pageSize === 'string' ? +queryBloggersParams.pageNumber : 1
+    let limit = pageSize
+    let skip = pageSize * (pageNumber - 1)
+    return {searchNameTerm, pageSize, pageNumber, limit, skip}
+}
+
+
+
+// function paginate<T>(items:T,queryParamsInfo)=>{
+//     let obj = {
+//         pagesCount: Math.ceil(totalCount / pageSize),
+//         page: pageNumber,
+//         pageSize,
+//         totalCOunt: bloggers.le,
+//         bloggers
+//     }
+//
+// }
+
+
+
 
 
 export const bloggersRepository = {
-    async allBloggers() {
-        const bloggers = await bloggersCollection.find({},{projection:{_id:false}}).toArray()
+    async allBloggers(query: any) {
+        let queryParamsInfo = queryParams(query)
+        const bloggers = await bloggersCollection
+            .find({projection:{_id:false}, name: {$regex: queryParamsInfo.searchNameTerm}})
+            .skip(queryParamsInfo.skip)
+            .limit(queryParamsInfo.pageSize)
+            .toArray()
+       // const res = paginate<BloggerType>(bloggers,queryParamsInfo)
+       //  let obj = {
+       //      pagesCount: Math.ceil(totalCount / pageSize),
+       //      page: pageNumber,
+       //      pageSize,
+       //      totalCount: bloggers.length,
+       //      bloggers
+       //  }
+       //  return obj
         return bloggers
     },
     async getBloggerById(id: string): Promise<BloggerType | null> {
@@ -32,23 +75,57 @@ export const bloggersRepository = {
 
 
 
-// export const bloggersQuery = (req: Request): bloggersSearchParam => {
-// const { pageNumber: pageNumberQuery,  pageSize: pageSizeQuery } = req.query
-// const bloggerId = req.params.id ? req.params.id : null
-// const pageNumber = pageNumberQuery ? +pageNumberQuery : 1
-// const pageSize = pageSizeQuery ? +pageSizeQuery : 10
-// const skip = pageSize * (pageNumber -1)
-// const limit = (pageSize)
-
-// ? - это тернарные выражения (загуглить), оператор
-
-// export const searchTerm = req.params.searchTerm
 
 
 
 
-// const searchNameTerm = "" передается как query
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const bloggersQuery = (req: Request): bloggersSearchParam => {
+//
+// }
+// let searchTerm = req.query.searchTerm
+// let pageSize:number = +req.query.pageSize : 10
+// let pageNumber: number = +req.query.pageNumber : 1
+// let skip:number = pageSize * (pageNumber - 1)
+// let limit = pageSize
+//
+//
+//
+//
+// let bloggerId: number = +req.query.id
+
+
+
+// let skip:number = pageSize * (pageNumber - 1)
+// let limit = pageSize
+
+
+
+
+
+
+
+
 // const pageNumber = Math.ceil( countDocuments / pageSize) (как параметры) defalutl 1 (number)  передается как query
-// const pageSize = defalutl 10 (number) передается как query
-
 // countDocuments ( передать filter, которая будет находить searchNameTerm

@@ -7,8 +7,12 @@ import {BloggerType} from "../repositories/db";
 
 export const bloggersRouter = Router({})
 
+
+
+
 bloggersRouter.get('/', async (req: Request, res: Response) => {
-    const foundBloggers = await bloggersService.allBloggers()
+
+    const foundBloggers = await bloggersService.allBloggers(req.query)
     res.status(200).send(foundBloggers)
 })
 bloggersRouter.get('/:id', async (req: Request, res: Response) => {
@@ -51,4 +55,6 @@ bloggersRouter.put('/:id',
         }
 })
 
-
+// pagination
+//typeof
+// +

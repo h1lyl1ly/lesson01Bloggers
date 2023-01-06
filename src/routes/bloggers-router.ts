@@ -8,8 +8,6 @@ import {BloggerType} from "../repositories/db";
 export const bloggersRouter = Router({})
 
 
-
-
 bloggersRouter.get('/', async (req: Request, res: Response) => {
 
     const foundBloggers = await bloggersService.allBloggers(req.query)
@@ -30,7 +28,7 @@ bloggersRouter.post('/',
     async (req: Request, res: Response) => {
         const newBlogger: BloggerType | null = await bloggersService.createBlogger(req.body.name, req.body.youtubeUrl)
         res.status(201).send(newBlogger)
-})
+    })
 bloggersRouter.delete('/:id',
     authMiddleware,
     async (req: Request, res: Response) => {
@@ -40,7 +38,7 @@ bloggersRouter.delete('/:id',
         } else {
             res.status(404).send()
         }
-})
+    })
 bloggersRouter.put('/:id',
     authMiddleware,
     bloggersValidation,
@@ -53,7 +51,7 @@ bloggersRouter.put('/:id',
         } else {
             res.status(404).send()
         }
-})
+    })
 
 // pagination
 //typeof
